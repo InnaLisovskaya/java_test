@@ -6,4 +6,6 @@ build/
 gradle-app-setting
 
 # Avoid ignoring Gradle wrapper jar file 
+
+.idea/workspace.xml
 !gradle-wrapper.jar

@@ -3,23 +3,9 @@ package inna;
 public class Distance {
 	public static void main (String[] args) {
 
-		Point p1 = new Point ();
-		Point p2 = new Point ();
+		Point p1 = new Point (7, -6);
+		Point p2 = new Point (-5, 0);
 
-		p1.x = 3;
-		p1.y = 5;
-
-		p2.x = 2;
-		p2.y = 9;
-
-		System.out.println (message (p1.x, p2.x, p1.y, p2.y) + distance(p1, p2));
-	}
-
-	public static double distance(Point p1, Point p2) {
-		return Math.sqrt((p2.x - p1.x)*(p2.x - p1.x) + (p2.y - p1.y)*(p2.y - p1.y));
-	}
-
-	public static String message (double x1, double y1, double x2, double y2) {
-		return "Расстояние между двумя точками (" + x1 + "," + y1 + ") и (" + x2 + "," + y2 + ") = ";
+		System.out.println ("Расстояние между двумя точками " + p1.coordinatesInTheBrackets() + " и " + p2.coordinatesInTheBrackets()  + " = " + p1.distance(p2));
 	}
 }

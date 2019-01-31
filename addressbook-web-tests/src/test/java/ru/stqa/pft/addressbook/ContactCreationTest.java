@@ -27,16 +27,15 @@ public class ContactCreationTest {
 
   @Test
   public void testContactCreation() throws Exception {
-    initNewContact(By.linkText("add new"));
+    initNewContact();
     fillInContactFields(new ContactData("Inna", "Lisovskaya", "Inka", "title", "My Company", "454016, Chelyabinsk, Molod st., 59-96", "8877665544", "innalis1985@mail.ru", "August", "31", "1985"));
-    addToGroup("new_group", By.name("new_group"), "Test 1");
-    submitGroupCreation("submit");
-    returnToContact(By.linkText("add new"));
-    returnHome(By.linkText("home"));
+    submitGroupCreation();
+    returnToContact();
+    returnHome();
   }
 
-  private void submitGroupCreation(String submit) {
-    wd.findElement(By.name(submit)).click();
+  private void submitGroupCreation() {
+    wd.findElement(By.name("submit")).click();
   }
 
   private void addToGroup(String new_group, By new_group2, String s) {
@@ -82,16 +81,16 @@ public class ContactCreationTest {
     wd.findElement(By.name("byear")).sendKeys(contactData.getbYear());
   }
 
-  private void initNewContact(By add_new) {
-    wd.findElement(add_new).click();
+  private void initNewContact() {
+    wd.findElement(By.linkText("add new")).click();
   }
 
-  private void returnToContact(By add_new) {
-    wd.findElement(add_new).click();
+  private void returnToContact() {
+    wd.findElement(By.linkText("add new")).click();
   }
 
-  private void returnHome(By home) {
-    wd.findElement(home).click();
+  private void returnHome() {
+    wd.findElement(By.linkText("home")).click();
   }
 
   @AfterMethod(alwaysRun = true)

@@ -20,8 +20,13 @@ public class HelperBase {
 
   protected void type(By locator, String text) {
     click(locator);
-    wd.findElement(locator).clear();
-    wd.findElement(locator).sendKeys(text);
+    if (text != null) {
+      String existingText = wd.findElement(locator).getAttribute("value");
+      if (! text.equals(existingText)) {
+        wd.findElement(locator).clear();
+        wd.findElement(locator).sendKeys(text);
+      }
+    }
   }
 
   protected void selectField(By locator, String s) {
@@ -29,7 +34,7 @@ public class HelperBase {
     click(locator);
   }
 
-  private boolean isAlertPresent() {
+  protected boolean isAlertPresent() {
     try {
       wd.switchTo().alert();
       return true;
@@ -37,7 +42,7 @@ public class HelperBase {
       return false;
     }
   }
-  private boolean isElementPresent(By by) {
+  protected boolean isElementPresent(By by) {
     try {
       wd.findElement(by);
       return true;

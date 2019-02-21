@@ -11,6 +11,13 @@ public class ContactHelper extends HelperBase {
     super(wd);
   }
 
+  public void initContactCreation() {
+    if (!isElementPresent(By.tagName("h1"))
+            || !wd.findElement(By.tagName("h1")).getText().equals("Edit / add address book entry")) {
+      click(By.linkText("add new"));
+    }
+  }
+
   public void submitContactCreation() {
     click(By.name("submit"));
   }
@@ -47,5 +54,18 @@ public class ContactHelper extends HelperBase {
 
   public void submitContactModification() {
     click(By.name("update"));
+  }
+
+  public boolean isContactPresent() {
+    if (isElementPresent(By.name("selected[]"))) {
+      return true;
+    }
+    return false;
+  }
+
+  public void createContact(ContactData contactData) {
+    initContactCreation();
+    fillInContactFields(contactData);
+    submitContactCreation();
   }
 }

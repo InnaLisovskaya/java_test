@@ -31,8 +31,8 @@ public class GroupHelper extends HelperBase {
     click(By.name("delete"));
   }
 
-  public void selectGroup() {
-    click(By.name("selected[]"));
+  public void selectGroup(int i) {
+    wd.findElements(By.name("selected[]")).get(i).click();
   }
 
   public void modifySelectedGroups() {

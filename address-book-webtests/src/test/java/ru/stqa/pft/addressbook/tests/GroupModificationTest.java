@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.models.GroupData;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class GroupModificationTest  extends TestBase {
@@ -18,11 +19,17 @@ public class GroupModificationTest  extends TestBase {
     List<GroupData> before = app.getGroupHelper().getGroupList();
     app.getGroupHelper().selectGroup(0);
     app.getGroupHelper().modifySelectedGroups();
-    app.getGroupHelper().fillInGroupForm(new GroupData("Test 5", "Test 5", "Test 5"));
+    GroupData group = new GroupData(before.get(0).getId(), "Modified", "Test 5", "Test 5");
+    app.getGroupHelper().fillInGroupForm(group);
     app.getGroupHelper().submitGroupModification();
     app.getNavigationHelper().gotoGroupPage();
     List<GroupData> after = app.getGroupHelper().getGroupList();
     Assert.assertEquals(after.size(), before.size());
+
+    before.remove(0);
+    before.add(group);
+
+    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
   }
 
 }

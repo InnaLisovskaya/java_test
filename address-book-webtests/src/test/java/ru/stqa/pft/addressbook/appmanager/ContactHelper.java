@@ -3,7 +3,13 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.models.ContactData;
+import ru.stqa.pft.addressbook.models.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ContactHelper extends HelperBase {
 
@@ -39,8 +45,8 @@ public class ContactHelper extends HelperBase {
 
   }
 
-  public void selectContact() {
-    click(By.name("selected[]"));
+  public void selectContact(int i) {
+    wd.findElements(By.name("selected[]")).get(i).click();
   }
 
   public void deleteSelectedContacts() {
@@ -48,8 +54,8 @@ public class ContactHelper extends HelperBase {
     wd.switchTo().alert().accept();
   }
 
-  public void modifySelectedContact() {
-    click(By.xpath("//img[@alt='Edit']"));
+  public void modifySelectedContact(int byId) {
+    click(By.xpath("//a[contains(@href,'edit.php?id=" + byId + "')]"));
   }
 
   public void submitContactModification() {
@@ -67,5 +73,27 @@ public class ContactHelper extends HelperBase {
     initContactCreation();
     fillInContactFields(contactData);
     submitContactCreation();
+  }
+
+  @Override
+  public String toString() {
+    return "ContactHelper{" +
+            "wd=" + wd +
+            '}';
+  }
+
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<ContactData>();
+    List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
+
+    for( WebElement element : elements) {
+      String lastName = element.findElement(By.xpath("td[2]")).getText();
+      String firstName = element.findElement(By.xpath("td[3]")).getText();
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("Value"));
+      ContactData contact = new ContactData(id, firstName, lastName, null, null, null, null, null, null, null, null, null);
+      contacts.add(contact);
+    }
+
+    return contacts;
   }
 }

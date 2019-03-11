@@ -58,18 +58,11 @@ public class ContactHelper extends HelperBase {
   }
 
   public void selectContactForModification(ContactData contact) {
-    click(By.xpath("//a[contains(@href,'edit.php?id=" + contact.getId() + "')]"));
+    wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", contact.getId()))).click();
   }
 
   public void submitContactModification() {
     click(By.name("update"));
-  }
-
-  public boolean isContactPresent() {
-    if (isElementPresent(By.name("selected[]"))) {
-      return true;
-    }
-    return false;
   }
 
   public void create(ContactData contactData) {
@@ -85,21 +78,24 @@ public class ContactHelper extends HelperBase {
             '}';
   }
 
- /* public List<ContactData> all() {
-    List<ContactData> contacts = new ArrayList<ContactData>();
+   public Set<ContactData> allWithPhones() {
+    Set<ContactData> contacts = new HashSet<ContactData>();
     List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
 
     for( WebElement element : elements) {
       String lastName = element.findElement(By.xpath("td[2]")).getText();
       String firstName = element.findElement(By.xpath("td[3]")).getText();
+      String[] phones = element.findElement(By.xpath("td[6]")).getText().split("\n");
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("Value"));
       ContactData contact = new ContactData()
-              .withId(id).withFirstName(firstName).withLastName(lastName);
+              .withId(id).withFirstName(firstName).withLastName(lastName)
+              .withMobilePhone(phones[1]).withHomePhone(phones[0]).withWorkPhone(phones[2]);
       contacts.add(contact);
     }
 
     return contacts;
-  }*/
+  }
+
 
   public Contacts all() {
     Contacts contacts = new Contacts();
@@ -126,5 +122,17 @@ public class ContactHelper extends HelperBase {
     selectContactForModification(contact);
     fillInContactFields(contact);
     submitContactModification();
+  }
+
+  public ContactData infoFromEditForm (ContactData contact) {
+     selectContactForModification(contact);
+     String firstName = wd.findElement(By.name("firstname")).getAttribute("value");
+     String lastName = wd.findElement(By.name("lastname")).getAttribute("value");
+     String home = wd.findElement(By.name("home")).getAttribute("value");
+     String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
+     String work = wd.findElement(By.name("work")).getAttribute("value");
+     wd.navigate().back();
+     return new ContactData().withId(contact.getId()).withFirstName(firstName).withLastName(lastName)
+             .withMobilePhone(mobile).withHomePhone(home).withWorkPhone(work);
   }
 }

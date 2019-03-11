@@ -78,25 +78,6 @@ public class ContactHelper extends HelperBase {
             '}';
   }
 
-   public Set<ContactData> allWithPhones() {
-    Set<ContactData> contacts = new HashSet<ContactData>();
-    List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
-
-    for( WebElement element : elements) {
-      String lastName = element.findElement(By.xpath("td[2]")).getText();
-      String firstName = element.findElement(By.xpath("td[3]")).getText();
-      String[] phones = element.findElement(By.xpath("td[6]")).getText().split("\n");
-      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("Value"));
-      ContactData contact = new ContactData()
-              .withId(id).withFirstName(firstName).withLastName(lastName)
-              .withMobilePhone(phones[1]).withHomePhone(phones[0]).withWorkPhone(phones[2]);
-      contacts.add(contact);
-    }
-
-    return contacts;
-  }
-
-
   public Contacts all() {
     Contacts contacts = new Contacts();
     List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
@@ -134,5 +115,23 @@ public class ContactHelper extends HelperBase {
      wd.navigate().back();
      return new ContactData().withId(contact.getId()).withFirstName(firstName).withLastName(lastName)
              .withMobilePhone(mobile).withHomePhone(home).withWorkPhone(work);
+  }
+
+  public Set<ContactData> allWithPhones() {
+    Set<ContactData> contacts = new HashSet<ContactData>();
+    List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
+
+    for( WebElement element : elements) {
+      String lastName = element.findElement(By.xpath("td[2]")).getText();
+      String firstName = element.findElement(By.xpath("td[3]")).getText();
+      String allPhones = element.findElement(By.xpath("td[6]")).getText();
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("Value"));
+      ContactData contact = new ContactData()
+              .withId(id).withFirstName(firstName).withLastName(lastName)
+              .withAllPhones(allPhones);
+      contacts.add(contact);
+    }
+
+    return contacts;
   }
 }

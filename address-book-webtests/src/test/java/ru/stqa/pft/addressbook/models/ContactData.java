@@ -4,19 +4,19 @@ package ru.stqa.pft.addressbook.models;
 import java.util.Objects;
 
 public class ContactData {
-  private int id;
-  private final String firstName;
-  private final String lastName;
-  private final String nickname;
-  private final String title;
-  private final String company;
-  private final String address;
+  private int id = Integer.MAX_VALUE;
+  private String firstName;
+  private String lastName;
+  private String nickname;
+  private String title;
+  private String company;
+  private String address;
 
-  private final String mobilePhone;
-  private final String email;
-  private final String bMonth;
-  private final String bDay;
-  private final String bYear;
+  private String mobilePhone;
+  private String email;
+  private String bMonth;
+  private String bDay;
+  private String bYear;
 
   @Override
   public String toString() {
@@ -25,50 +25,6 @@ public class ContactData {
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             '}';
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    ContactData that = (ContactData) o;
-    return Objects.equals(firstName, that.firstName) &&
-            Objects.equals(lastName, that.lastName);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(firstName, lastName);
-  }
-
-  public ContactData(String firstName, String lastName, String nickname, String title, String company, String address, String mobilePhone, String email, String bMonth, String bDay, String bYear) {
-    this.id = Integer.MAX_VALUE;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.nickname = nickname;
-    this.title = title;
-    this.company = company;
-    this.address = address;
-    this.mobilePhone = mobilePhone;
-    this.email = email;
-    this.bMonth = bMonth;
-    this.bDay = bDay;
-    this.bYear = bYear;
-  }
-
-  public ContactData(int id, String firstName, String lastName, String nickname, String title, String company, String address, String mobilePhone, String email, String bMonth, String bDay, String bYear) {
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.nickname = nickname;
-    this.title = title;
-    this.company = company;
-    this.address = address;
-    this.mobilePhone = mobilePhone;
-    this.email = email;
-    this.bMonth = bMonth;
-    this.bDay = bDay;
-    this.bYear = bYear;
   }
 
   public String getFirstName() {
@@ -116,5 +72,81 @@ public class ContactData {
   }
 
   public int getId() { return id; }
+
+
+  public ContactData withFirstName(String firstName) {
+    this.firstName = firstName;
+    return this;
+  }
+
+  public ContactData withLastName(String lastName) {
+    this.lastName = lastName;
+    return this;
+  }
+
+  public ContactData withNickname(String nickname) {
+    this.nickname = nickname;
+    return this;
+  }
+
+  public ContactData withTitle(String title) {
+    this.title = title;
+    return this;
+  }
+
+  public ContactData withAddress(String address) {
+    this.address = address;
+    return this;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactData that = (ContactData) o;
+    return id == that.id &&
+            Objects.equals(firstName, that.firstName) &&
+            Objects.equals(lastName, that.lastName);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, firstName, lastName);
+  }
+
+  public ContactData withCompany(String company) {
+    this.company = company;
+    return this;
+  }
+
+  public ContactData withMobilePhone(String mobilePhone) {
+    this.mobilePhone = mobilePhone;
+    return this;
+  }
+
+  public ContactData withEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  public ContactData withbMonth(String bMonth) {
+    this.bMonth = bMonth;
+    return this;
+  }
+
+  public ContactData withbDay(String bDay) {
+    this.bDay = bDay;
+    return this;
+  }
+
+  public ContactData withbYear(String bYear) {
+    this.bYear = bYear;
+    return this;
+  }
+
+  public ContactData withId(int id) {
+    this.id = id;
+    return this;
+  }
 }
 

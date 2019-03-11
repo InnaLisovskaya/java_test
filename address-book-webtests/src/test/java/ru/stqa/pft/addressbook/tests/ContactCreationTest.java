@@ -3,27 +3,23 @@ package ru.stqa.pft.addressbook.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.models.ContactData;
-
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class ContactCreationTest extends TestBase {
 
-  @Test (enabled = false)
+  @Test
   public void testContactCreation() throws Exception {
-    app.goTo().returnHome();
-    List<ContactData> before = app.getContactHelper().getContactList();
-    ContactData contact = new ContactData("Inna", "Lisovskaya", null ,null, null, null, null, null, "August", "31", null );
-    app.getContactHelper().createContact(contact);
-    app.goTo().returnHome();
-    List<ContactData> after = app.getContactHelper().getContactList();
+    app.goTo().home();
+    Set<ContactData> before = app.contacts().all();
+    ContactData contact = new ContactData()
+            .withFirstName("Inna").withLastName("Lisovskaya").withbMonth("April").withbDay("9").withbYear("1989") ;
+    app.contacts().create(contact);
+    app.goTo().home();
+    Set<ContactData> after = app.contacts().all();
     Assert.assertEquals(after.size(), before.size()+1);
 
+    contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt());
     before.add(contact);
-
-    Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId()) ;
-    before.sort(byId);
-    after.sort(byId);
     Assert.assertEquals(before, after);
   }
 }

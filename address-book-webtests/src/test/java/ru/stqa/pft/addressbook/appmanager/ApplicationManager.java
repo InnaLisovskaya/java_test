@@ -49,7 +49,7 @@ public class ApplicationManager {
     return groupHelper;
   }
 
-  public ContactHelper getContactHelper() { return contactHelper; }
+  public ContactHelper contacts() { return contactHelper; }
 
   public NavigationHelper goTo() {
     return navigationHelper;

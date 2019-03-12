@@ -43,6 +43,8 @@ public class ContactHelper extends HelperBase {
     type(By.name("email"), contactData.getEmail());
     type(By.name("byear"), contactData.getbYear());
 
+    attach(By.name("photo"), contactData.getPhoto());
+
     selectField(By.name("bday"), contactData.getbDay());
     selectField(By.name("bmonth"), contactData.getbMonth());
 
